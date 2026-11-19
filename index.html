@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>민결에게, 100일</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400&display=swap">
+  <link rel="stylesheet" href="style.css?v=3">
+</head>
+<body>
+  <div class="app" id="app">
+    <!-- 왼쪽: 편지 -->
+    <section class="pane letter-pane" id="letterPane">
+      <div class="letter-scroll" id="letterScroll">
+        <div class="letter" id="letter" aria-live="polite"></div>      </div>
+      <footer class="bar">
+        <img class="divider" src="assets/divider.svg" alt="">
+        <div class="buttons">
+          <button type="button" class="pill" id="replyBtn">reply</button>
+          <button type="button" class="pill" id="resetBtn">reset</button>
+          <button type="button" class="pill" id="printBtn">print</button>
+        </div>
+      </footer>
+    </section>
+
+    <!-- 오른쪽: 답장 -->
+    <section class="pane reply-pane" id="replyPane" hidden>
+      <div class="reply-body">
+        <label for="replyText" class="sr-only">답장</label>
+        <textarea id="replyText" placeholder="답장해죠."></textarea>
+        <div class="print-reply" id="printReply"></div>
+      </div>
+      <footer class="bar bar--reply">
+        <span class="status" id="saveStatus"></span>
+        <div class="buttons">
+          <button type="button" class="pill" id="saveBtn">save</button>
+          <button type="button" class="pill" id="closeBtn">close</button>
+        </div>
+      </footer>
+    </section>
+  </div>
+
+  <script type="module" src="app.js?v=8"></script>
+</body>
+</html>
