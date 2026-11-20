@@ -136,6 +136,7 @@ function renderText(container, text, b, clickable) {
 }
 
 function render({ scroll = false } = {}) {
+  const keepTop = scrollEl.scrollTop;   // 지금 스크롤 위치 기억
   letterEl.replaceChildren();
   for (let b = 0; b < shown; b++) {
     const span = document.createElement("span");
@@ -150,9 +151,20 @@ function render({ scroll = false } = {}) {
     if (LETTER[b].breakAfter && b < shown - 1) letterEl.append(document.createElement("br"));
   }
 
+  // 다시 그려도 스크롤 위치는 그대로
+  scrollEl.scrollTop = keepTop;
+
+  // 새 문장이 화면 아래로 가려졌을 때만, 보일 만큼만 살짝 내려줌
   if (scroll) {
-    requestAnimationFrame(() => {
-      scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: "smooth" });
+    const reveal = () => {
+      const last = letterEl.lastElementChild;
+      if (!last) return;
+      const overflow = last.getBoundingClientRect().bottom - scrollEl.getBoundingClientRect().bottom + 16;
+      if (overflow > 0) scrollEl.scrollTop += overflow;
+    };
+    reveal();
+    letterEl.querySelectorAll("img").forEach((img) => {
+      if (!img.complete) img.addEventListener("load", reveal, { once: true });
     });
   }
 }
@@ -178,7 +190,8 @@ function next() {
 function reset() {
   shown = 1;
   steps = LETTER.map(() => 0);
-  render({ scroll: true });
+  render();
+  scrollEl.scrollTop = 0;
 }
 
 /* ---------- 클릭 규칙 ---------- */
